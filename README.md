@@ -69,7 +69,7 @@ POST /likes: Create a new like.
 GET /likes/{id}: Retrieve a specific like.
 DELETE /likes/{id}: Delete a specific like
 
-## Request and Response Examples
+## Request and Responce
 POST /register
 Content-Type: application/json
 
@@ -78,7 +78,7 @@ Content-Type: application/json
   "email": "mahababu@.com",
   "password": "secretpassword"
 }
-## Responce
+##  Responce
 HTTP/1.1 200 OK
 Content-Type: application/json
 
@@ -91,21 +91,19 @@ Content-Type: application/json
   "user": {
     "id": 1,
     "name": mamhabur",
-    "email": "mamhabur@.com",
+    "email": "mahababur@.com",
     "created_at": "2024-03-05T12:00:00Z",
     "updated_at": "2024-03-05T12:00:00Z"
   }
 }
 
 
-## Error HandlingDescribe how errors are handled in your API, including status codes, error messages, and error response formats.
+## Error Handling and Responce 
 {
   "status": "error",
   "status_code": 500,
   "message": "Error message detailing the issue"
 }
-
-
 
 
 ## Conclusion
@@ -115,9 +113,11 @@ Thank you for exploring the Community Car API! We hope that this documentation h
 If you encounter any issues, have questions, or would like to provide feedback, please feel free to reach out to us:
 
 - **Email**: support@communitycarapi.com
-- **GitHub Issues**: [Open an issue](https://github.com/mamun792/community_API/issues)
+- **GitHub Issues**: [Open an issue](https://github.com/mamun792/community_API/community-car-api/issues)
 
 We're continuously working to improve our API and provide the best experience for our users. Your input is invaluable to us in this process.
 
 Happy coding!
+
+
 
