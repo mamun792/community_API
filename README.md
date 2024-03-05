@@ -10,11 +10,11 @@ Explain how authentication works for accessing your API endpoints. Include detai
 ## Endpoints
 List all the endpoints available in your API along with their purpose and any required parameters.
 
-- `POST /register`: Register a new user.
-- `POST /login`: Log in to the system.
+- `USER /register`: Register a new user.
+- `USER /login`: Log in to the system.
 - `GET /profile`: Get user profile information.
-- `POST /refresh`: Refresh authentication token.
-- `POST /logout`: Log out from the system.
+- `USER /refresh`: Refresh authentication token.
+- `USER /logout`: Log out from the system.
 - `GET /posts`: Retrieve a list of posts.
 - `POST /posts`: Create a new post.
 - `GET /posts/{id}`: Retrieve a specific post.
