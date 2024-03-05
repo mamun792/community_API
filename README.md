@@ -34,13 +34,42 @@ List all the endpoints available in your API along with their purpose and any re
 - `DELETE /likes/{id}`: Delete a specific like.
 
 ## Request and Response Examples
-Provide examples of requests and responses for each endpoint listed above. Include information about request parameters, headers, and response bodies.
+POST /register
+Content-Type: application/json
 
-## Error Handling
-Describe how errors are handled in your API, including status codes, error messages, and error response formats.
+{
+  "name": "mamhabur",
+  "email": "mahababu@.com",
+  "password": "secretpassword"
+}
+## Responce
+HTTP/1.1 200 OK
+Content-Type: application/json
 
-## Rate Limiting
-If your API has rate limiting, explain the rate limits and how they are enforced.
+{
+  "message": "Successfully registered",
+  "status_code": 200,
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": 1,
+    "name": mamhabur",
+    "email": "mamhabur@.com",
+    "created_at": "2024-03-05T12:00:00Z",
+    "updated_at": "2024-03-05T12:00:00Z"
+  }
+}
+
+
+## Error HandlingDescribe how errors are handled in your API, including status codes, error messages, and error response formats.
+{
+  "status": "error",
+  "status_code": 500,
+  "message": "Error message detailing the issue"
+}
+
+
 
 ## Examples of Use
 Show some examples of how developers can use your API in their applications.
