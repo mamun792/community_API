@@ -43,6 +43,7 @@ Content-Type: application/json
   "password": "secretpassword"
 }
 
+
 ## Endpoints
 List all the endpoints available in your API along with their purpose and any required parameters.
 
