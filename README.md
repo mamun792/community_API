@@ -107,10 +107,7 @@ Content-Type: application/json
 
 
 
-## Examples of Use
-Show some examples of how developers can use your API in their applications.
 
-## Conclusion
 ## Conclusion
 
 Thank you for exploring the Community Car API! We hope that this documentation has provided you with all the information you need to get started integrating our API into your applications.
