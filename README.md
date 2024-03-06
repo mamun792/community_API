@@ -1,66 +1,124 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# community_API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+## Introduction
+Welcome to the Community Car API! This API serves as a platform for community members to share information about car-related topics, including posts, comments, and likes.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Our API enables developers to:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Register and authenticate users.
+- Create, read, update, and delete posts.
+- Upload images for posts.
+- Add, view, and delete comments on posts.
+- Like and unlike posts.
+- Access user profiles and manage authentication tokens.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Authentication
+The Community Car API uses Laravel Passport for authentication. Passport provides a full OAuth2 server implementation for securing your API.
 
-## Learning Laravel
+### Authentication Flow
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. **User Registration**: To access protected endpoints, users need to register for an account using the `/register` endpoint. This endpoint requires the user to provide a name, email, and password. Upon successful registration, the API returns an access token.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. **User Login**: Registered users can log in to the system using the `/login` endpoint. They need to provide their email and password. Upon successful login, the API returns an access token.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. **Access Token**: Access tokens are required to authenticate requests to protected endpoints. They should be included in the `Authorization` header of the HTTP request with the value `Bearer <access_token>`.
 
-## Laravel Sponsors
+4. **Token Refresh**: Access tokens have a limited lifespan. When an access token expires, users can use the `/refresh` endpoint to obtain a new access token without needing to log in again.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+5. **Logout**: To log out from the system and invalidate the access token, users can use the `/logout` endpoint.
 
-### Premium Partners
+### Required Headers
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- `Authorization`: This header is required for accessing protected endpoints. It should contain the access token in the format `Bearer <access_token>`.
 
-## Contributing
+### Example Usage
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```http
+POST /login
+Content-Type: application/json
 
-## Code of Conduct
+{
+  "email": "user@example.com",
+  "password": "secretpassword"
+}
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+## Endpoints
+List all the endpoints available in your API along with their purpose and any required parameters.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+POST /register: Register a new user.
+POST /login: Log in to the system.
+GET /profile: Get user profile information.
+POST /refresh: Refresh authentication token.
+POST /logout: Log out from the system.
+GET /posts: Retrieve a list of posts.
+POST /posts: Create a new post.
+GET /posts/{id}: Retrieve a specific post.
+PUT /posts/{id}: Update a specific post.
+DELETE /posts/{id}: Delete a specific post.
+POST /image: Upload an image for a post.
+GET /posts/{id}/comments: Retrieve comments for a specific post.
+GET /posts/{id}/likes: Retrieve likes for a specific post.
+GET /comments: Retrieve a list of comments.
+POST /comments: Create a new comment.
+GET /comments/{id}: Retrieve a specific comment.
+PUT /comments/{id}: Update a specific comment.
+DELETE /comments/{id}: Delete a specific comment.
+GET /likes: Retrieve a list of likes.
+POST /likes: Create a new like.
+GET /likes/{id}: Retrieve a specific like.
+DELETE /likes/{id}: Delete a specific like
 
-## License
+## Request and Responce
+POST /register
+Content-Type: application/json
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+{
+  "name": "mamhabur",
+  "email": "mahababu@.com",
+  "password": "secretpassword"
+}
+##  Responce
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "message": "Successfully registered",
+  "status_code": 200,
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": 1,
+    "name": mamhabur",
+    "email": "mahababur@.com",
+    "created_at": "2024-03-05T12:00:00Z",
+    "updated_at": "2024-03-05T12:00:00Z"
+  }
+}
+
+
+## Error Handling and Responce 
+{
+  "status": "error",
+  "status_code": 500,
+  "message": "Error message detailing the issue"
+}
+
+
+## Conclusion
+
+Thank you for exploring the Community Car API! We hope that this documentation has provided you with all the information you need to get started integrating our API into your applications.
+
+If you encounter any issues, have questions, or would like to provide feedback, please feel free to reach out to us:
+
+- **Email**: support@communitycarapi.com
+- **GitHub Issues**: [Open an issue](https://github.com/mamun792/community_API/community-car-api/issues)
+
+We're continuously working to improve our API and provide the best experience for our users. Your input is invaluable to us in this process.
+
+Happy coding!
+
+
+
