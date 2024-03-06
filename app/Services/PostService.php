@@ -9,9 +9,19 @@ use App\Models\Image as ImageModel;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ImageRequest;
+use Illuminate\Http\Response;
 
 class PostService
 {
+    public function jsonResponse($status, $status_code, $message, $data = null){
+        return response()->json([
+            'status' => $status,
+            'status_code' => $status_code,
+            'message' => $message,
+            'data' => $data
+        ], $status_code);
+    }
+
     public function index()
     {
         try{
@@ -21,11 +31,8 @@ class PostService
             }])
             ->paginate(5);
 
-            return response()->json([
-                'status' => 'success',
-                'status_code' => 200,
-                'message' => 'Posts retrieved successfully',
-                'data' => PostResource::collection($posts),
+            $response=[
+                'posts' => PostResource::collection($posts),
                 'meta' => [
                     'total' => $posts->total(),
                     'currentPage' => $posts->currentPage(),
@@ -34,15 +41,13 @@ class PostService
                     'from' => $posts->firstItem(),
                     'to' => $posts->lastItem(),
                 ]
-            ], 200);
+            ];
+
+            return $this->jsonResponse('success', Response::HTTP_OK, 'Posts retrieved successfully', $response);
+                
 
         }catch(\Exception $e){
-            return response()->json([
-                'status' => 'error',
-                'status_code' => 500,
-                'message' => 'An error occurred',
-                'errors' => $e->getMessage()
-            ], 500);
+            return $this->jsonResponse('error', Response::HTTP_INTERNAL_SERVER_ERROR, 'An error occurred', $e->getMessage());
         }
     }
 
@@ -63,19 +68,9 @@ class PostService
 
            
 
-            return response()->json([
-                'status' => 'success',
-                'status_code' => 201,
-                'message' => 'Post created successfully',
-                'data' => $post
-            ], 201);
+            return $this->jsonResponse('success', Response::HTTP_CREATED, 'Post created successfully', new PostResource($post));
         }catch(\Exception $e){
-            return response()->json([
-                'status' => 'error',
-                'status_code' => 500,
-                'message' => 'An error occurred',
-                'errors' => $e->getMessage()
-            ], 500);
+            return $this->jsonResponse('error', Response::HTTP_INTERNAL_SERVER_ERROR, 'An error occurred', $e->getMessage());
         }
     }
 
@@ -88,19 +83,9 @@ class PostService
             }])
             ->findOrFail($id);
 
-            return response()->json([
-                'status' => 'success',
-                'status_code' => 200,
-                'message' => 'Post retrieved successfully',
-                'data' => new PostResource($post)
-            ], 200);
+            return $this->jsonResponse('success', Response::HTTP_OK, 'Post retrieved successfully', new PostResource($post));
         }catch(\Exception $e){
-            return response()->json([
-                'status' => 'error',
-                'status_code' => 500,
-                'message' => 'An error occurred',
-                'errors' => $e->getMessage()
-            ], 500);
+            return $this->jsonResponse('error', Response::HTTP_INTERNAL_SERVER_ERROR, 'An error occurred', $e->getMessage());
         }
     }
 
@@ -129,26 +114,12 @@ class PostService
                
                 $post->images()->saveMany($images);
                 
-                return response()->json([
-                    'status' => 'success',
-                    'status_code' => 201,
-                    'message' => 'Images uploaded successfully',
-                    'data' => $images
-                ], 201);
+                return $this->jsonResponse('success', Response::HTTP_CREATED, 'Images uploaded successfully', $images);
             } else {
-                return response()->json([
-                    'status' => 'error',
-                    'status_code' => 400,
-                    'message' => 'No images were provided',
-                ], 400);
+                return $this->jsonResponse('error', Response::HTTP_BAD_REQUEST, 'No image uploaded');
             }
         } catch(\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'status_code' => 500,
-                'message' => 'An error occurred',
-                'errors' => $e->getMessage()
-            ], 500);
+            return $this->jsonResponse('error', Response::HTTP_INTERNAL_SERVER_ERROR, 'An error occurred', $e->getMessage());
         }
     }
     public function getComments(string $id){
@@ -159,19 +130,9 @@ class PostService
              $query->select('id','name');
             }])->get();
 
-            return response()->json([
-                'status' => 'success',
-                'status_code' => 200,
-                'message' => 'Comments retrieved successfully',
-                'data' => $comments
-            ], 200);
+            return  $this->jsonResponse('success', Response::HTTP_OK, 'Comments retrieved successfully', $comments);
         }catch(\Exception $e){
-            return response()->json([
-                'status' => 'error',
-                'status_code' => 500,
-                'message' => 'An error occurred',
-                'errors' => $e->getMessage()
-            ], 500);
+            return $this->jsonResponse('error', Response::HTTP_INTERNAL_SERVER_ERROR, 'An error occurred', $e->getMessage());
         }
     }
 
@@ -181,19 +142,9 @@ class PostService
             $likes = $post->likes()->with(['user'=>function($query){
              $query->select('id','name');
             }])->get();
-            return response()->json([
-                'status' => 'success',
-                'status_code' => 200,
-                'message' => 'Likes retrieved successfully',
-                'data' => $likes
-            ], 200);
+            return $this->jsonResponse('success', Response::HTTP_OK, 'Likes retrieved successfully', $likes);
         }catch(\Exception $e){
-            return response()->json([
-                'status' => 'error',
-                'status_code' => 500,
-                'message' => 'An error occurred',
-                'errors' => $e->getMessage()
-            ], 500);
+            return $this->jsonResponse('error', Response::HTTP_INTERNAL_SERVER_ERROR, 'An error occurred', $e->getMessage());
         }
     }
        
