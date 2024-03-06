@@ -5,17 +5,7 @@ namespace App\Http\Controllers\Car;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
-// use App\Models\Post;
-// use App\Models\User;
-// use App\Models\Comment;
-// use App\Models\Like;
 
-// use App\Http\Resources\PostResource;
-
-//use App\Models\Image as ImageModel;
-
-//use Illuminate\Support\Facades\Auth;
-//use Illuminate\Expectation;
 use App\Http\Requests\ImageRequest;
 use App\Services\PostService;
 

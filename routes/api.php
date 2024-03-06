@@ -25,6 +25,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
 
     Route::apiResource('posts', PostController::class);
+    
     Route::post('image', [PostController::class, 'uploadImage'])->name('image');
     Route::get('post/{id}/comments', [PostController::class, 'getComments'])->name('comments');
     Route::get('post/{id}/likes', [PostController::class, 'getLikes'])->name('likes');
